@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CurryNation</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+   <style>
+     .navbar-brand {
+       float: left;
+       margin-left: -15px;
+       margin- right: 5px;
+       margin-top: -11px;
+     }
+   </style>
+</head>
+<body>
+
+ <!--satic navbar-->
+  <div class="navbar navbar-static-top">
+    <div class="container">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>        
+      </button>
+      <a class="navbar-brand" href="/users/sign_in"><%= image_tag "currynation.png" %></a>
+      <div class="nav-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><%= link_to "Recipes", recipes_path %></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+         <% if user_signed_in?  %>
+           <li><%= link_to "#{current_user.email}" %> </li>
+           <li class="active"<%= link_to "Logout", 
+             destroy_user_session_path, method: :delete %>></li> 
+         <% else %>
+          <li><%= link_to "Login", new_user_session_path %></li>
+          <li class="active"><%= link_to "Signup",
+           new_user_registration_path %> </li>
+        <% end %>
+        </ul>
+      </div>
+    </div><!--/.nav-collapse --> 
+    <div class="row">
+      <div class="col-lg-2">
+        <div class="panel panel-primary" id="panels">
+          <div class="panel-heading">Food Preferences
+          </div>
+          <% @food_preferences.each do |fp| %>
+            <p><%= link_to fp.name, 
+              recipes_path(params[:search], food_preference_id: fp.id) %></p>
+         <% end %>
+        
+         </div>
+
+        <div class="panel panel-primary" id="panels">
+          <div class="panel-heading">Food Type
+          </div>
+          <% @food_types.each do |ft| %>
+            <p><%= link_to ft.name, 
+              recipes_path(params[:search], food_type_id: ft.id) %></p>
+          <% end  %>
+         </div>
+
+        <div class="panel panel-primary" id="panels">
+          <div class="panel-heading">Cuisine
+          </div>
+          <% @cuisines.each do |c| %>
+            <p><%= link_to c.name, 
+              recipes_path(params[:search], cuisine_id: c.id) %></p>
+          <% end  %>          
+        </div>
+
+         <div class="panel panel-primary" id="panels">
+          <div class="panel-heading">Difficulty level
+          </div>
+              <% Recipe::DIFFICULTY.each do |level| %>
+              <br>
+              <%= radio_button_tag 'difficulty_level', level, remote: true %>
+              <%= level.humanize %>
+             
+            <% end %>
+         </div>
+
+
+      </div>
+
+      <div class="col-lg-9">
+ 
+    <%= yield %>
+      </div>
+     </div>
+</div>
+  
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+This app is a practice task from a book "Rails 4 Application Development HOTSHOT" by Saurabh Bhatia, edition 2014.
+It is not finished or made for further use. It is about writing and sharing recipes on line.
+Sacffolding technique and devise generator has been used. 
+It is made in Ruby version 2.0.0-p451, and rails -v 4.0.3. DB is MySQL.
